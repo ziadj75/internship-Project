@@ -1,5 +1,6 @@
 package com.example.projetstage.service;
 
+import com.example.projetstage.domain.TacheTicket;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

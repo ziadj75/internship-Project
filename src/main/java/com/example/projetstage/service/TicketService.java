@@ -1,5 +1,7 @@
 package com.example.projetstage.service;
 
+import com.example.projetstage.domain.Ticket;
+
 import java.util.List;
 
 public interface TicketService {

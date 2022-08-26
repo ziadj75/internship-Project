@@ -1,5 +1,7 @@
 package com.example.projetstage.service.impl;
 
+import com.example.projetstage.domain.User;
+import com.example.projetstage.domain.UserPrincipal;
 import com.example.projetstage.enumeration.Role;
 import com.example.projetstage.exception.domain.*;
 import com.example.projetstage.repository.UserRepository;

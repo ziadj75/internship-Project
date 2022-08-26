@@ -25,10 +25,8 @@ public class Ticket {
     private String etatTicket;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "ticket")
-    private List<TicketMembreEquipe> ticketMembreEquipe;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy="ticket")
-    private List<Conseils> conseils;
+    private List<TacheTicket> ticketMembreEquipe;
+
 
     public Long getId() {
         return id;
@@ -94,20 +92,11 @@ public class Ticket {
         this.etatTicket = etatTicket;
     }
 
-    public List<TicketMembreEquipe> getTicketMembreEquipe() {
+    public List<TacheTicket> getTicketMembreEquipe() {
         return ticketMembreEquipe;
     }
 
-    public void setTicketMembreEquipe(List<TicketMembreEquipe> ticketMembreEquipe) {
+    public void setTicketMembreEquipe(List<TacheTicket> ticketMembreEquipe) {
         this.ticketMembreEquipe = ticketMembreEquipe;
     }
-
-    public List<Conseils> getConseils() {
-        return conseils;
-    }
-
-    public void setConseils(List<Conseils> conseils) {
-        this.conseils = conseils;
-    }
-
 }

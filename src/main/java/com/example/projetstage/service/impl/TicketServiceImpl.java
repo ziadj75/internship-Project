@@ -3,8 +3,7 @@ package com.example.projetstage.service.impl;
 import com.example.projetstage.domain.Ticket;
 import com.example.projetstage.repository.TicketRepository;
 import com.example.projetstage.service.TicketService;
-import com.example.projetstage.service.ConseillsService;
-import com.example.projetstage.service.TicketMembreEquipeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +42,10 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.findByEtatTicket(etatTicket);
     }
 
+    @Override
+    public List<Ticket> findAll() {
+        return null;
+    }
 
 
     @Override
@@ -65,6 +68,16 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.deleteByEtatTicket(etatTicket);
     }
 
+    @Override
+    public int save(Ticket ticket) {
+        return 0;
+    }
+
+    @Override
+    public int update(Ticket ticket) {
+        return 0;
+    }
 
 
+}
 

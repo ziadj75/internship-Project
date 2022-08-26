@@ -1,5 +1,6 @@
 package com.example.projetstage.service;
 
+import com.example.projetstage.domain.User;
 import com.example.projetstage.exception.domain.*;
 import org.springframework.web.multipart.MultipartFile;
 

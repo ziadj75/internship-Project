@@ -1,10 +1,12 @@
 package com.example.projetstage.listener;
 
+import com.example.projetstage.domain.UserPrincipal;
 import com.example.projetstage.service.LoginAttemptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class AuthenticationSuccessListener {

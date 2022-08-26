@@ -1,5 +1,6 @@
 package com.example.projetstage.repository;
 
+import com.example.projetstage.domain.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

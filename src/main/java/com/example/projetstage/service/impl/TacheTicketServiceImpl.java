@@ -4,7 +4,6 @@ import com.example.projetstage.domain.TacheTicket;
 import com.example.projetstage.repository.TacheTicketRepository;
 import com.example.projetstage.service.TacheTicketService;
 import com.example.projetstage.service.TicketService;
-import com.example.projetstage.service.MembreEquipeService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -47,6 +46,11 @@ public class TacheTicketServiceImpl implements TacheTicketService {
     @Override
     public List<TacheTicket> findByMembreEquipeCollaborateurCodeCollaborateurAndTicketCode(String codeCollaborateur, String codeTicket) {
         return tacheTicketRepository.findByMembreEquipeCollaborateurCodeCollaborateurAndTicketCode(codeCollaborateur, codeTicket);
+    }
+
+    @Override
+    public int save(TacheTicket tacheTicket) {
+        return 0;
     }
 
 

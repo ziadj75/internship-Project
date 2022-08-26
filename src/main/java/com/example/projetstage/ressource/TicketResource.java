@@ -1,5 +1,6 @@
 package com.example.projetstage.ressource;
 
+import com.example.projetstage.domain.Ticket;
 import com.example.projetstage.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
