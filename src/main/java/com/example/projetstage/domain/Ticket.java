@@ -13,19 +13,20 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date dateDeProbleme;
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateDebut;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateFin;
     private String description;
     private String libelle;
-    private String code;
-    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String ref;
     private String etatTicket;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "ticket")
-    private List<TacheTicket> ticketMembreEquipe;
+    private List<TacheTicket> taches;
+    @OneToMany
+    private List<User> employe;
+
+
 
 
     public Long getId() {
@@ -36,13 +37,6 @@ public class Ticket {
         this.id = id;
     }
 
-    public Date getDateDeProbleme() {
-        return dateDeProbleme;
-    }
-
-    public void setDateDeProbleme(Date dateDeProbleme) {
-        this.dateDeProbleme = dateDeProbleme;
-    }
 
     public Date getDateDebut() {
         return dateDebut;
@@ -76,12 +70,12 @@ public class Ticket {
         this.libelle = libelle;
     }
 
-    public String getCode() {
-        return code;
+    public String getRef() {
+        return ref;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setRef(String ref) {
+        this.ref = ref;
     }
 
     public String getEtatTicket() {
@@ -92,11 +86,19 @@ public class Ticket {
         this.etatTicket = etatTicket;
     }
 
-    public List<TacheTicket> getTicketMembreEquipe() {
-        return ticketMembreEquipe;
+    public List<TacheTicket> getTaches() {
+        return taches;
     }
 
-    public void setTicketMembreEquipe(List<TacheTicket> ticketMembreEquipe) {
-        this.ticketMembreEquipe = ticketMembreEquipe;
+    public void setTaches(List<TacheTicket> taches) {
+        this.taches = taches;
+    }
+
+    public List<User> getEmploye() {
+        return employe;
+    }
+
+    public void setEmploye(List<User> employe) {
+        this.employe = employe;
     }
 }
