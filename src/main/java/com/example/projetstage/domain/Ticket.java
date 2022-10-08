@@ -21,7 +21,7 @@ public class Ticket {
     private String ref;
     private String etatTicket;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany
     private List<TacheTicket> taches;
     @OneToMany
     private List<User> employe;

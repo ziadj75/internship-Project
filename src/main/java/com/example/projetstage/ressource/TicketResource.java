@@ -13,41 +13,21 @@ public class TicketResource {
 
     @Autowired
     private TicketService ticketService;
-    @GetMapping("/code/{code}")
-    public Ticket findByCode(@PathVariable String code) {
-        return ticketService.findByCode(code);
-    }
-    @GetMapping("/dateDeProbleme/{dateDeProbleme}")
-    public List<Ticket> findByDateDeProbleme(@PathVariable String dateDeProbleme) {
-        return ticketService.findByDateDeProbleme(dateDeProbleme);
-    }
-    @GetMapping("/date/{dateDebut}/datefin/{DateFin}")
-    public List<Ticket> findByDateDebutAndDateFin(@PathVariable String dateDebut,@PathVariable String DateFin) {
-        return ticketService.findByDateDebutAndDateFin(dateDebut, DateFin);
-    }
-    @GetMapping("/etat/{etatTicket}")
-    public List<Ticket> findByEtatTicket(@PathVariable String etatTicket) {
-        return ticketService.findByEtatTicket(etatTicket);
-    }
     @GetMapping("/")
     public List<Ticket> findAll() {
         return ticketService.findAll();
     }
+    @GetMapping("/etat/{etat}")
+    public List<Ticket> findByEtatTicket(@PathVariable String etat) {
+        return ticketService.findByEtatTicket(etat);
+    }
     @GetMapping("/ref/{ref}")
-    public List<Ticket> findByTicketMembreEquipeEquipeRef(@PathVariable String ref) {
-        return ticketService.findByTicketMembreEquipeEquipeRef(ref);
+    public Ticket findByRef(@PathVariable String ref) {
+        return ticketService.findByRef(ref);
     }
-    @GetMapping("/codeTicket/{code}")
-    public List<Ticket> findByTicketMembreEquipeMembreEquipeCollaborateurCodeCollaborateur(@PathVariable String code) {
-        return ticketService.findByTicketMembreEquipeMembreEquipeCollaborateurCodeCollaborateur(code);
-    }
-    @DeleteMapping("/code/{code}")
-    public int deleteByCode(String code) {
-        return ticketService.deleteByCode(code);
-    }
-    @DeleteMapping("/etat/{etatTicket}")
-    public int deleteByEtatTicket(String etatTicket) {
-        return ticketService.deleteByEtatTicket(etatTicket);
+    @DeleteMapping("/ref/{ref}")
+    public int deleteTicketByRef(@PathVariable String ref) {
+        return ticketService.deleteTicketByRef(ref);
     }
     @PostMapping("/")
     public int save(@RequestBody Ticket ticket) {

@@ -1,82 +1,84 @@
 package com.example.projetstage.service.impl;
 
+import com.example.projetstage.domain.TacheTicket;
 import com.example.projetstage.domain.Ticket;
+import com.example.projetstage.domain.User;
+import com.example.projetstage.enumeration.Etat;
 import com.example.projetstage.repository.TicketRepository;
+import com.example.projetstage.service.TacheTicketService;
 import com.example.projetstage.service.TicketService;
 
+import com.example.projetstage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
+    private final UserService userService;
+    private final TacheTicketService tacheTicketService;
 
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository,UserService userService,TacheTicketService tacheTicketService) {
         this.ticketRepository = ticketRepository;
-
-    }
-
-    @Override
-    public Ticket findByCode(String code) {
-        return ticketRepository.findByCode(code);
-    }
-
-    @Override
-    public List<Ticket> findByDateDeProbleme(String dateDeProbleme) {
-        return ticketRepository.findByDateDeProbleme(dateDeProbleme);
-    }
-
-    @Override
-    public List<Ticket> findByDateDebutAndDateFin(String dateDebut, String DateFin) {
-        return ticketRepository.findByDateDebutAndDateFin(dateDebut, DateFin);
-    }
-
-    @Override
-    public List<Ticket> findByEtatTicket(String etatTicket) {
-        return ticketRepository.findByEtatTicket(etatTicket);
+        this.userService = userService;
+        this.tacheTicketService = tacheTicketService;
     }
 
     @Override
     public List<Ticket> findAll() {
-        return null;
-    }
-
-
-    @Override
-    public List<Ticket> findByTicketMembreEquipeEquipeRef(String ref) {
-        return ticketRepository.findByTicketMembreEquipeEquipeRef(ref);
+        return ticketRepository.findAll();
     }
 
     @Override
-    public List<Ticket> findByTicketMembreEquipeMembreEquipeCollaborateurCodeCollaborateur(String code) {
-        return ticketRepository.findByTicketMembreEquipeMembreEquipeCollaborateurCodeCollaborateur(code);
+    public List<Ticket> findByEtatTicket(String etat) {
+        return ticketRepository.findByEtatTicket(etat);
     }
 
-    @Transactional
-    public int deleteByCode(String code) {
-        return ticketRepository.deleteByCode(code);
+    @Override
+    public Ticket findByRef(String ref) {
+        return ticketRepository.findByRef(ref);
     }
 
-    @Transactional
-    public int deleteByEtatTicket(String etatTicket) {
-        return ticketRepository.deleteByEtatTicket(etatTicket);
+    @Override
+    public int deleteTicketByRef(String ref) {
+        return ticketRepository.deleteTicketByRef(ref);
     }
 
     @Override
     public int save(Ticket ticket) {
-        return 0;
+        Ticket ticketfound=findByRef(ticket.getRef());
+        List<User> userSave=new ArrayList<>();
+        List<TacheTicket> tacheTickets=new ArrayList<>();
+        if(ticketfound==null){
+            ticket.setEtatTicket(String.valueOf(Etat.BEGIN));
+            ticket.getEmploye().forEach(user->{
+                User userFound = userService.findUserByUsername(user.getUsername());
+                userSave.add(userFound);
+            });
+            ticket.setEmploye(userSave);
+            ticket.getTaches().forEach(tacheTicket -> {
+                tacheTicketService.save(tacheTicket);
+                tacheTickets.add(tacheTicket);
+            });
+            ticket.setTaches(tacheTickets);
+            ticketRepository.save(ticket);
+            return 1;
+        }
+        return -2;
     }
 
     @Override
     public int update(Ticket ticket) {
+
         return 0;
     }
+
 
 
 }

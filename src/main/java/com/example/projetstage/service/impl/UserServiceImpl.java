@@ -8,13 +8,16 @@ import com.example.projetstage.repository.UserRepository;
 import com.example.projetstage.service.EmailService;
 import com.example.projetstage.service.LoginAttemptService;
 import com.example.projetstage.service.UserService;
+import com.example.projetstage.valueObject.UserVo;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.hibernate.dialect.MySQL5Dialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +27,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -51,13 +56,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
     private LoginAttemptService loginAttemptService;
     private EmailService emailService;
-
+    private EntityManager entity;
+    @Bean
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Autowired
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, LoginAttemptService loginAttemptService, EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.loginAttemptService = loginAttemptService;
         this.emailService = emailService;
+    }
+
+    public List<UserVo> rechercheMulti(UserVo userVo){
+        String requete="select c from User c Where 1=1 ";
+        if(!userVo.getEmail().isBlank())
+            requete+="And email Like '%"+userVo.getEmail()+"%'";
+        if(!userVo.getUsername().isBlank())
+            requete+="And username Like '%"+userVo.getUsername()+"%'";
+        if(!userVo.getFirstName().isBlank())
+            requete+="And firstName Like '%"+userVo.getFirstName()+"%'";
+        if(!userVo.getLastName().isBlank())
+            requete+="And lastName Like '%"+userVo.getLastName()+"%'";
+        if(!userVo.getRole().isBlank())
+            requete+="And role Like '%"+userVo.getRole()+"%'";
+
+        return entity.createQuery(requete).getResultList();
+
     }
 
     @Override
